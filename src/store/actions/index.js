@@ -300,6 +300,7 @@ export const stripePaymentConfirmation = (sendData, setErrorMessage, setLoading,
         try{
             const data = await api.post("/order/users/payments/online", sendData);
             if(data) {
+                console.log("Inside if");
                 localStorage.removeItem("CHECKOUT_ADDRESS");
                 localStorage.removeItem("cartItems");
                 localStorage.removeItem("client-secret");
