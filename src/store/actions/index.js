@@ -298,8 +298,9 @@ export const createStripePaymentSecret = (totalPrice) => async (dispatch, getSta
 
 export const stripePaymentConfirmation = (sendData, setErrorMessage, setLoading, toast) => async (dispatch, getState) => {
         try{
-            const { response } = await api.post("/order/users/payments/online", sendData);
-            if(response.data) {
+            const {data} = await api.post("/order/users/payments/online", sendData);
+            if(data) {
+                localStorage.removeItem("CHECKOUT_ADDRESS");
                 localStorage.removeItem("cartItems");
                 localStorage.removeItem("client-secret");
                 dispatch({type: "REMOVE_CLIENT_SECRET_ADDRESS"});

@@ -32,14 +32,14 @@ const PaymentConfirmation = () => {
     ) {
         const sendData = {
                 addressId: selectedUserCheckoutAddress.addressId,
-                pgName: "Stripe",
+                pgName: "stripe",
                 pgPaymentId: paymentIntent,
                 pgStatus: "succeeded",
                 pgResponseMessage: "Payment successful"
               };
         console.log(selectedUserCheckoutAddress);
         console.log(sendData);
-        dispatch(stripePaymentConfirmation(sendData, setErroeMessage, setLoading, toast));
+                dispatch(stripePaymentConfirmation(sendData, setErroeMessage, setLoading, toast));
     }
   }, [dispatch, paymentIntent, clientSecret, redirectStatus, cart]);
 
