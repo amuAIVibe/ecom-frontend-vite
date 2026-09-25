@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import PaymentForm from './PaymentForm';
+import toast from 'react-hot-toast';
 import { createStripePaymentSecret } from '../../store/actions';
 import CustomSkeleton from '../shared/CustomSkeleton';
 
@@ -15,7 +16,7 @@ const StripePayment = () => {
     const {isLoading, errormessage } = useSelector((state)=> state.errors);
     useEffect(()=> {
       if(!clientSecret){
-        dispatch(createStripePaymentSecret(totalPrice));
+        dispatch(createStripePaymentSecret(totalPrice, toast));
       }
     }, [clientSecret, dispatch, totalPrice]);
     if(isLoading){

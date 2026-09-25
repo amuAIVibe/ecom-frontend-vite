@@ -112,7 +112,6 @@ export const authenticatetSignInUser = (sendData, toast, reset, navigate, setLoa
         try{
             setLoader(true);
             const { data } = await api.post("/auth/signin", sendData);
-            console.log("Auth Data::",data);
             dispatch({ 
                 type: "LOGIN_USER",
                 payload: data
@@ -280,7 +279,7 @@ export const getUserCart = () => async (dispatch, getState) =>  {
     }
 }
 
-export const createStripePaymentSecret = (totalPrice) => async (dispatch, getState) => {
+export const createStripePaymentSecret = (totalPrice, toast) => async (dispatch, getState) => {
         try{
             dispatch({ type: 'IS_FETCHING' });
             const { data } = await api.post("/order/stripe-client-secret", {

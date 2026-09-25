@@ -37,8 +37,8 @@ const PaymentConfirmation = () => {
                 pgStatus: "succeeded",
                 pgResponseMessage: "Payment successful"
               };
-        console.log(selectedUserCheckoutAddress);
-        console.log(sendData);
+        //console.log(selectedUserCheckoutAddress);
+        //console.log(sendData);
                 dispatch(stripePaymentConfirmation(sendData, setErroeMessage, setLoading, toast));
     }
   }, [dispatch, paymentIntent, clientSecret, redirectStatus, cart]);
