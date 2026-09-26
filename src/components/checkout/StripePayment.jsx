@@ -6,6 +6,7 @@ import PaymentForm from './PaymentForm';
 import toast from 'react-hot-toast';
 import { createStripePaymentSecret } from '../../store/actions';
 import CustomSkeleton from '../shared/CustomSkeleton';
+import { Description } from '@headlessui/react';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -14,9 +15,21 @@ const StripePayment = () => {
     const clientSecret = useSelector((state) => state.auth.clientSecret);
     const totalPrice = useSelector((state) => state.carts.totalPrice);
     const {isLoading, errormessage } = useSelector((state)=> state.errors);
+    const {user, selectedUserCheckoutAddress } = useSelector((state)=> state.auth);
     useEffect(()=> {
       if(!clientSecret){
-        dispatch(createStripePaymentSecret(totalPrice, toast));
+        const sendData = {
+          amount: Number(totalPrice) * 100,
+          currency: "usd",
+          email: user.email,
+          name: `${user.username}`,
+          address: selectedUserCheckoutAddress,
+          description: `Order for ${user.email}`,
+          metadata: {
+            test: "1"
+          }
+        };
+        dispatch(createStripePaymentSecret(sendData, toast));
       }
     }, [clientSecret, dispatch, totalPrice]);
     if(isLoading){
