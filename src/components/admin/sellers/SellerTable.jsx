@@ -1,14 +1,9 @@
 import { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
-//import { adminOrderTableColumn } from '../../helper/tableColumn';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { adminSellersTableColumn } from '../../helper/tableColumn';
-//import Modal from '../../shared/Modal';
 
 const SellerTable = ({ sellers, pagination }) => {
-//   const [updateOpenModal, setUpdateOpenModal] = useState(false);
-//   const [selectedItem, setSelectedItem] = useState("");
-//   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   const tableRecords = sellers?.map((seller) => {
     return {

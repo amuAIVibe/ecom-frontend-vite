@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import InputField from '../../shared/InputField';
 import Button from '@mui/material/Button';
 import Spinners from '../../shared/Spinners';
-import { useDispatch, useSelector } from 'react-redux';
-import { addNewProductForDashboard, addNewSellerFromAdminDashboard, fetchCategories, updateAdminDashboardProduct } from '../../../store/actions';
+import { useDispatch } from 'react-redux';
+import { addNewSellerFromAdminDashboard } from '../../../store/actions';
 import toast from 'react-hot-toast';
-import SelectTextField from '../../shared/SelectTextField';
-import Skeleton from '@mui/material/Skeleton';
-import CustomSkeleton from '../../shared/CustomSkeleton';
-import ErrorPage from '../../shared/ErrorPage';
 
-const AddSellerForm = ({ setOpen, product, update=false }) => {
+
+const AddSellerForm = ({ setOpen }) => {
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors}
   } = useForm({
     mode: "onTouched"
