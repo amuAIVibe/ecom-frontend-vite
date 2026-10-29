@@ -12,6 +12,8 @@ import CustomSkeleton from '../../shared/CustomSkeleton';
 import ErrorPage from '../../shared/ErrorPage';
 
 const AddProductForm = ({ setOpen, product, update=false }) => {
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user?.roles.includes("ROLE_ADMIN");
   const [loader, setLoader] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(false);
   const { categories } = useSelector((state) => state.products);
@@ -39,14 +41,15 @@ const AddProductForm = ({ setOpen, product, update=false }) => {
         toast,
         reset,
         setLoader,
-        setOpen
+        setOpen,
+        isAdmin
       ))
     } else {
       const sendData = {
         ...data,
         id: product.id
       };
-      dispatch(updateAdminDashboardProduct(sendData, toast, reset, setLoader, setOpen));
+      dispatch(updateAdminDashboardProduct(sendData, toast, reset, setLoader, setOpen, isAdmin));
     }
   };
   useEffect(()=> {

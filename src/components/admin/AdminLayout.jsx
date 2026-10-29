@@ -4,6 +4,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { Description, Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } from '@headlessui/react';
 import { FaBars } from 'react-icons/fa';
 import { Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AdminLayout = () => {
   let [sidebarOpen, setSidebarOpen] = useState(false);

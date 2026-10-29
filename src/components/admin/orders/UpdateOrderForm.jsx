@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
 import Spinners from '../../shared/Spinners';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateOrderStatusFromAdminDashboard } from '../../../store/actions';
 import toast from 'react-hot-toast';
 
@@ -20,7 +20,8 @@ const ORDER_STATUSES = [
 ];
 
 const UpdateOrderForm = ({ setOpen, selectedId, selectedItem, loader, setLoader }) => {
-
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user?.roles.includes("ROLE_ADMIN");
   const dispatch = useDispatch();
   const selectedStatus = selectedItem?.orderStatus ?? selectedItem?.status;
   const [orderStatus, setOrderStatus] = useState(selectedStatus || "Accepted");
@@ -37,10 +38,12 @@ const UpdateOrderForm = ({ setOpen, selectedId, selectedItem, loader, setLoader 
         return;
     }
     dispatch(updateOrderStatusFromAdminDashboard(
+        setOpen,
         selectedId,
         orderStatus,
         toast,
-        setLoader
+        setLoader,
+        isAdmin
     ));
  };
   return (

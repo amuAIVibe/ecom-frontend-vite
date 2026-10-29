@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fecthDashboardProductsForAdmin, fetchProducts, getOrdersForDashboard } from "../store/actions";
 
@@ -43,6 +43,9 @@ export const useDashboardProductFilter = () => {
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
 
+    const { user } = useSelector((state) => state.auth);
+    const isAdmin = user && user?.roles.includes("ROLE_ADMIN");
+
     useEffect(() => {
         const params = new URLSearchParams();
 
@@ -54,7 +57,7 @@ export const useDashboardProductFilter = () => {
         const queryString = params.toString();
         //console.log("Dispatching FETCH_PRODUCTS with query string:", queryString);
 
-        dispatch(fecthDashboardProductsForAdmin(queryString));
+        dispatch(fecthDashboardProductsForAdmin(queryString, isAdmin));
 
     }, [searchParams, dispatch]);
 

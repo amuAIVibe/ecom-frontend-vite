@@ -61,6 +61,7 @@ const OrderTable = ({ adminOrder, pagination }) => {
             },
           }}
           className="w-full"
+          autoHeight
           rows={tableRecords}
           columns={adminOrderTableColumn(handleEdit)}
           paginationMode="server"
@@ -74,7 +75,7 @@ const OrderTable = ({ adminOrder, pagination }) => {
             },
           }}
           onPaginationModelChange={handlePaginationChange}
-          pageSizeOptions={[pagination?.pageSixe || 10]}
+          pageSizeOptions={[pagination?.pageSize || 10]}
           disableRowSelectionOnClick
           disableColumnResize
           pagination

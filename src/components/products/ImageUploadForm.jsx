@@ -3,13 +3,15 @@ import React, { useRef, useState } from 'react'
 import { FaCloudUploadAlt } from 'react-icons/fa'
 import Spinners from '../shared/Spinners';
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateProductImageFromDashboard } from '../../store/actions';
 
 const ImageUploadForm = ({
   setOpen,
   product
 }) => {
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user?.roles.includes("ROLE_ADMIN");
   const dispatch = useDispatch();
   const fileInputRef = useRef();
   const [previewImage, setPreviewImage] = useState(null);
@@ -38,7 +40,7 @@ const ImageUploadForm = ({
     }
     const formData = new FormData();
     formData.append("image", selectedFile);
-    dispatch(updateProductImageFromDashboard(formData, product.id, toast, setLoader, setOpen));
+    dispatch(updateProductImageFromDashboard(formData, product.id, toast, setLoader, setOpen, isAdmin));
   };
 
   const handleClearImage = () => {
@@ -46,6 +48,8 @@ const ImageUploadForm = ({
     setSelectedFile(null);
     fileInputRef.current.value = null;
   };
+
+  
   return (
     <div className="py-5 relative h-full">
       <form className="space-y-4" onSubmit={addNewImageHandler}>

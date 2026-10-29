@@ -16,6 +16,7 @@ import ImageUploadForm from '../../products/ImageUploadForm';
 import ProductViewModal from '../../shared/ProductViewModal';
 
 const AdminProducts = () => {
+  
   const { products, pagination } = useSelector((state) => state.products);
   
   const { isLoading, errorMessage } = useSelector((state)=> state.errors);
@@ -24,6 +25,9 @@ const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(
       pagination?.number+1 || 1
     );
+
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user?.roles.includes("ROLE_ADMIN");
 
   const dispatch = useDispatch();
   const [selectedProduct, setSelectedProduct] = useState('');
@@ -35,6 +39,7 @@ const AdminProducts = () => {
   const [openImageUploadModal, setOpenImageUploadModal] = useState(false);
 
   const tableRecords = products?.map((item) => {
+    
     return {
       id: item.productId,
       productName: item.productName,
@@ -58,7 +63,7 @@ const AdminProducts = () => {
   };
 
   const onDeleteHandler = () => {
-    dispatch(deleteProduct(setLoader, selectedProduct?.id, toast, setOpenDeleteModal));
+    dispatch(deleteProduct(setLoader, selectedProduct?.id, toast, setOpenDeleteModal, isAdmin));
   };
 
   const handleImageUpload = (product) => {
